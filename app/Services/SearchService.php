@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Hotel;
 use Carbon\Carbon;
 
 class SearchService
@@ -17,20 +18,17 @@ class SearchService
         $nights = $checkin->diffInDays($checkout);
 
         $hotels = Hotel::with(['rooms' => function ($query) use ($guests) {
-            $query->where('available_rooms', '>', 0)
-                ->where('max_occupancy', '>=', $guests);
-        }])
-            ->when($city, function ($query) use ($city) {
+            $query->where('available_rooms', '>', 0)->where('max_occupancy', '>=', $guests);
+        }])->when($city, function ($query) use ($city) {
                 $query->where('city', $city);
-            })
-            ->get();
+            })->get();
 
-        // نفلتر الفنادق اللي معندهاش غرف متاحة
+
         $hotels = $hotels->filter(function ($hotel) {
             return $hotel->rooms->isNotEmpty();
         });
 
-        // نحسب السعر
+
         return $hotels->map(function ($hotel) use ($nights) {
             return [
                 'hotel' => $hotel,
