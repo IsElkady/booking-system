@@ -24,6 +24,24 @@ class HotelSeeder extends Seeder
         */
 
         Hotel::create([
+            "name"=>"The Gabriel",
+            "city"=>"Cairo",
+            "country"=>"Egypt",
+            "rating"=>5
+        ]);
+        Hotel::create([
+            "name"=>"InterContinental",
+            "city"=>"Cairo",
+            "country"=>"Egypt",
+            "rating"=>5
+        ]);
+        Hotel::create([
+            "name"=>"Marriott",
+            "city"=>"Giza",
+            "country"=>"Egypt",
+            "rating"=>5
+        ]);
+        Hotel::create([
             "name"=>"De Paris Hotel",
             "city"=>"Albanien",
             "country"=>"Albania",

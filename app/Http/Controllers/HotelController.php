@@ -31,7 +31,7 @@ class HotelController extends Controller
             'country' => 'required|string',
             'rating' => 'required|integer|min:1|max:5',
         ]);
-
+       // dd($data);
         $this->hotelService->create($data);
 
         return redirect()->route('hotels.index');

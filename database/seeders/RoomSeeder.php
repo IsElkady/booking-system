@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use App\Models\Room;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoomSeeder extends Seeder
 {
@@ -21,27 +22,31 @@ class RoomSeeder extends Seeder
             $table->integer('max_occupancy');
             $table->integer('available_rooms');
         */
-
-        Room::create([
-            'hotel_id'=>1,
-            'name'=>'room1',
-            'price_per_night'=>1000.00,
-            'max_occupancy'=>1,
-            'available_rooms'=>10
-        ]);
-        Room::create([
-            'hotel_id'=>1,
-            'name'=>'room20',
-            'price_per_night'=>1200.00,
-            'max_occupancy'=>1,
-            'available_rooms'=>20
-        ]);
-        Room::create([
-            'hotel_id'=>1,
-            'name'=>'room40',
-            'price_per_night'=>1400.00,
-            'max_occupancy'=>1,
-            'available_rooms'=>5
-        ]);
+        Room::query()->Delete();
+        DB::statement("Alter table rooms Auto_increment=1");
+        $hotels=Hotel::all();
+        foreach($hotels as $hotel) {
+            Room::create([
+                'hotel_id' => $hotel->id,
+                'name' => 'Deluxe Room',
+                'price_per_night' => rand(80, 150),
+                'max_occupancy' => 2,
+                'available_rooms' => rand(1,5)
+            ]);
+            Room::create([
+                'hotel_id' => $hotel->id,
+                'name' => 'Standard Room',
+                'price_per_night' => rand(50, 100),
+                'max_occupancy' => 2,
+                'available_rooms' => rand(1,5)
+            ]);
+            Room::create([
+                'hotel_id' => $hotel->id,
+                'name' => 'Family Room',
+                'price_per_night' => rand(120, 200),
+                'max_occupancy' => 4,
+                'available_rooms' => rand(1,3)
+            ]);
+        }
     }
 }

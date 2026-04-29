@@ -32,7 +32,14 @@ class SearchService
         return $hotels->map(function ($hotel) use ($nights) {
             return [
                 'hotel' => $hotel,
-                'rooms' => $hotel->rooms,
+                'rooms' => $hotel->rooms->map(function ($room) use ($nights) {
+                    return [
+                        'room_id' => $room->id,
+                        'room_name'=>$room->name,
+                        'price_per_night' => $room->price_per_night,
+                        'total_price' => $room->price_per_night * $nights,
+                    ];
+                })->values(),
                 'total_price' => $hotel->rooms->map(function ($room) use ($nights) {
                     return [
                         'room_id' => $room->id,

@@ -19,7 +19,7 @@ class SearchController extends Controller
 //        $request['guests']=2;
         $data = $request->validate([
             'city' => 'required|string',
-            'checkin_date' => 'required|date',
+            'checkin_date' => 'required|date|after_or_equal:today',
             'checkout_date' => 'required|date|after:checkin_date',
             'guests' => 'required|integer|min:1',
         ]);
